@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Каталог книг{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <h1><a href="/books">Каталог</a></h1>
+        </div>
+        <div class="row">
+            {%for book in books %}
+            <div class="book col-md-4">
+                <h2><a href="/books/{{book.pub_date|date:'Y-m-d'}}">{{book.name}}</a></h2>
+                <p>Автор: {{book.author}}</p>
+                <p>Дата публикации: {{book.pub_date|date:'Y-m-d'}}</p>
+            </div>
+            {% endfor %}
+        </div>
+            {% if previous_page %}
+                <a class="button button-primary" href="/books/{{previous_page.0.0|date:'Y-m-d'}}"><-{{previous_page.0.0|date:'Y-m-d'}}</a>
+            {% endif %}
+            {% if next_page %}
+                <a class="button button-primary" href="/books/{{next_page.0.0|date:'Y-m-d'}}">{{next_page.0.0|date:'Y-m-d'}}-></a>
+            {% endif %}
+    </div>
+{% endblock %}
+
+<!--Вариант 2. Работает, только если в БД у книг разные даты.-->
+<!--        {% if books.has_previous %}-->
+<!--                <a class="button button-primary" href="/books/{{ previous_page }}"><-{{previous_page}}</a>-->
+<!--            {% endif %}-->
+<!--            {% if books.has_next %}-->
+<!--                <a class="button button-primary" href="/books/{{ next_page }}">{{next_page}}-></a>-->
+<!--            {% endif %}-->
